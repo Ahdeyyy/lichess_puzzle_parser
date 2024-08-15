@@ -114,12 +114,14 @@ function filterIntoEncroissantByOpening(lichess_db: Database, encroissant_db: Da
 
 async function main() {
     const lichess_db = initLichessDb("lichess_db.db3")
-    // const done = await parseLichessCsv(lichess_db)
+    const done = await parseLichessCsv(lichess_db)
     const openings = ['petrov']
-    for (const opening of openings) {
-        const encroissant_db = initEncroissantDb(`${opening}_puzzles.db3`)
-        filterIntoEncroissantByOpening(lichess_db, encroissant_db, opening)
-        encroissant_db.close()
+    if (done) {
+        for (const opening of openings) {
+            const encroissant_db = initEncroissantDb(`${opening}_puzzles.db3`)
+            filterIntoEncroissantByOpening(lichess_db, encroissant_db, opening)
+            encroissant_db.close()
+        }
     }
     lichess_db.close()
 }
